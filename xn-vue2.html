@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Vue2 Object.definepPoperty(obj,'',options)</title>
+</head>
+
+<body>
+  <input id="input" type="text">
+  <span id="span"></span>
+
+  <script>
+    let input = document.querySelector('#input')
+    let span = document.querySelector('#span')
+
+    let obj = {}
+    // 数据劫持
+    Object.defineProperty(obj, 'text', {
+      configurable: true,
+      enumerable: true,
+      get() {
+        console.log('获取值: ')
+      },
+      set(newVal) {
+        console.log('更新值: ', newVal)
+        input.value = newVal
+        span.innerHTML = newVal
+      }
+    })
+    // 输入监听
+    input.addEventListener('keyup', e => {
+      obj.text = e.target.value
+    })
+  </script>
+</body>
+
+</html>

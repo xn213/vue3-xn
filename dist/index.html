@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Vue3 composition 实战 - 初识</title>
+</head>
+
+<body>
+  <div id="app"></div>
+  <script src="./vue.global.js"></script>
+  <script>
+    const { createApp, reactive, computed, effect } = Vue
+    const XnComponent = {
+      template: `
+        <button @click="increment">Count is {{ state.count }}, double is {{ state.double }}</button>
+      `,
+      setup() {
+        const state = reactive({
+          count: 0,
+          double: computed(() => state.count * 2)
+        })
+        function increment() {
+          state.count++
+        }
+        effect(() => {
+          // 副作用
+          console.log('数字修改了', state.count)
+        })
+        return {
+          state,
+          increment,
+        }
+      },
+    }
+    createApp().mount(XnComponent, '#app')
+  </script>
+</body>
+
+</html>
